@@ -6,6 +6,7 @@ module.exports = {
     siteUrl: `https://todak-sun.github.io/`,
   },
   plugins: [
+    `gatsby-plugin-typescript`,
     `gatsby-plugin-react-helmet`,
     `gatsby-plugin-image`,
     {
@@ -19,8 +20,8 @@ module.exports = {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `markdown-pages`,
-        path: `${__dirname}/src/markdown-pages`
-      }
+        path: `${__dirname}/src/_blogs`,
+      },
     },
     `gatsby-transformer-remark`,
     `gatsby-transformer-sharp`,
