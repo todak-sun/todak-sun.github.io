@@ -4,14 +4,7 @@ import { graphql, Link } from 'gatsby'
 import Layout from '../components/layout'
 import Seo from '../components/seo'
 
-interface IndexPageProps {
-  path: string
-  data: any
-}
-
-const IndexPage = (props: IndexPageProps) => {
-  const { data } = props
-  console.log(data);
+const IndexPage = () => {
   return (
     <Layout>
       <Seo title="Home" />
@@ -28,17 +21,3 @@ const IndexPage = (props: IndexPageProps) => {
 }
 
 export default IndexPage
-
-export const pageQuery = graphql`
-  query {
-    allMarkdownRemark {
-      edges {
-        node {
-          frontmatter {
-            slug
-          }
-        }
-      }
-    }
-  }
-`

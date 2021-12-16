@@ -23,7 +23,26 @@ module.exports = {
         path: `${__dirname}/src/_blogs`,
       },
     },
-    `gatsby-transformer-remark`,
+    {
+      resolve: `gatsby-transformer-remark`,
+      options: {
+        tableOfContents: {
+          maxDepth: 3,
+        },
+        plugins: [
+          {
+            resolve: `gatsby-remark-images`,
+            options: {
+              loading: `lazy`,
+            },
+          },
+          {
+            resolve: `gatsby-remark-prismjs`,
+          },
+        ],
+      },
+    },
+
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
     {
