@@ -5,7 +5,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
   const { createPage } = actions
   const result = await graphql(`
     {
-      allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }, limit: 1000) {
+      allMarkdownRemark(sort: { fields: [frontmatter___created], order: DESC }, limit: 1000) {
         edges {
           node {
             fields {
@@ -13,8 +13,8 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
             }
             frontmatter {
               title
-              update(formatString: "YYYY-MM-DD")
-              date(formatString: "YYYY-MM-DD")
+              updated(formatString: "YYYY-MM-DD")
+              created(formatString: "YYYY-MM-DD")
             }
           }
         }
@@ -41,6 +41,15 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
   const { createNodeField } = actions
   if (node.internal.type === `MarkdownRemark`) {
     const slug = createFilePath({ node, getNode, basePath: `pages` })
-    console.log(slug)
+
+    if(!node.frontmatter.updated){
+      node.frontmatter.updated = `-`
+    }
+
+    createNodeField({
+      name: `slug`,
+      node: node,
+      value: slug,
+    })
   }
 }

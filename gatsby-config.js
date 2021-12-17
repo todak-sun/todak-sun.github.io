@@ -30,12 +30,12 @@ module.exports = {
           maxDepth: 3,
         },
         plugins: [
-          {
-            resolve: `gatsby-remark-images`,
-            options: {
-              loading: `lazy`,
-            },
-          },
+          // {
+          //   resolve: `gatsby-remark-images`,
+          //   options: {
+          //     loading: `lazy`,
+          //   },
+          // },
           {
             resolve: `gatsby-remark-prismjs`,
           },
