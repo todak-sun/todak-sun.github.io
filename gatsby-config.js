@@ -27,22 +27,11 @@ module.exports = {
       resolve: `gatsby-transformer-remark`,
       options: {
         tableOfContents: {
-          maxDepth: 3,
+          heading: null,
+          maxDepth: 6,
         },
-        plugins: [
-          // {
-          //   resolve: `gatsby-remark-images`,
-          //   options: {
-          //     loading: `lazy`,
-          //   },
-          // },
-          {
-            resolve: `gatsby-remark-prismjs`,
-          },
-        ],
       },
     },
-
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
     {
