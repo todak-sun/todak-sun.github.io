@@ -1,5 +1,5 @@
 import * as React from 'react'
-import Layout from '../components/layout'
+import LayoutContainer from '../components/layout'
 import { graphql } from 'gatsby'
 
 interface BlogProps {
@@ -13,10 +13,10 @@ const Blog = (props: BlogProps) => {
   const { frontmatter, html } = markdownRemark
   return (
     <>
-      <Layout>
+      <LayoutContainer>
         <h1>{frontmatter.title}</h1>
         <div className="blog-content" dangerouslySetInnerHTML={{ __html: html }} />
-      </Layout>
+      </LayoutContainer>
     </>
   )
 }

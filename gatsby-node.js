@@ -1,20 +1,20 @@
 const path = require(`path`)
 const { createFilePath } = require(`gatsby-source-filesystem`)
+const { recreateSlug, fillFrontmatter } = require(`./src/utils/gatsby-support`)
 
 exports.onCreateNode = ({ node, actions, getNode }) => {
   const { createNodeField } = actions
- 
+
   if (node.internal.type === `MarkdownRemark`) {
     const slug = createFilePath({ node, getNode, basePath: `pages` })
-
-    if (!node.frontmatter.updated) {
-      node.frontmatter.updated = `-`
-    }
+    const frontMatter = fillFrontmatter(node.frontmatter);
+    node.frontmatter = frontMatter;
+    
 
     createNodeField({
       name: `slug`,
       node: node,
-      value: slug,
+      value: recreateSlug(slug),
     })
   }
 }
@@ -61,5 +61,3 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
     })
   })
 }
-
-

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import Layout from '../../components/layout'
+import LayoutContainer from '../../components/layout'
 import { graphql, Link } from 'gatsby'
 import { List } from 'antd'
 
@@ -23,7 +23,7 @@ const BlogIndexPage = (props: BlogIndexPageProps) => {
   }))
 
   return (
-    <Layout>
+    <LayoutContainer>
       <p>여기는 블로그 메인이다.</p>
 
       <List
@@ -51,7 +51,7 @@ const BlogIndexPage = (props: BlogIndexPageProps) => {
           </li>
         ))}
       </ul>
-    </Layout>
+    </LayoutContainer>
   )
 }
 
