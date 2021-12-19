@@ -1,6 +1,7 @@
 import * as React from 'react'
 import Layout from '../../components/layout'
-import { graphql } from 'gatsby'
+import { graphql, Link } from 'gatsby'
+import { List } from 'antd'
 
 interface BlogIndexPageProps {
   path: string
@@ -24,8 +25,31 @@ const BlogIndexPage = (props: BlogIndexPageProps) => {
   return (
     <Layout>
       <p>여기는 블로그 메인이다.</p>
+
+      <List
+        itemLayout="vertical"
+        size="large"
+        pagination={{
+          onChange: page => {
+            console.log(page)
+          },
+          pageSize: 2,
+        }}
+        dataSource={postList}
+        footer={
+          <div>
+            <p>footer</p>
+          </div>
+        }
+        renderItem={(item: any) => <List.Item key={item.path}>{item.title}</List.Item>}
+      />
+
       <ul>
-      {postList.map((post: any) => <li key={post.path}>{post.path}-{post.title}</li>)}
+        {postList.map((post: any) => (
+          <li key={post.path}>
+            <Link to={`/blogs${post.path}`}>{post.title}</Link>
+          </li>
+        ))}
       </ul>
     </Layout>
   )

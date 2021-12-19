@@ -7,7 +7,7 @@
 
 import * as React from "react"
 import PropTypes from "prop-types"
-import { useStaticQuery, graphql } from "gatsby"
+import { useStaticQuery, graphql, Link } from "gatsby"
 
 import Header from "./header"
 import "./layout.css"
@@ -26,6 +26,12 @@ const Layout = ({ children }) => {
   return (
     <>
       <Header siteTitle={data.site.siteMetadata?.title || `Title`} />
+      <div>
+        <ul>
+          <li><Link to="/blogs">블로그</Link></li>
+          <li>포트폴리오</li>
+        </ul>
+      </div>
       <div
         style={{
           margin: `0 auto`,
