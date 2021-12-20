@@ -1,3 +1,6 @@
+const path = require(`path`);
+const defaultThumbnail = require(`../images/NULL.png`)
+
 exports.recreateSlug = slug => {
   let result = ''
   if (slug.endsWith('/')) {
@@ -14,6 +17,7 @@ exports.fillFrontmatter = frontmatter => {
     categories: '',
     group: '',
     display: true,
+    thumbnail : defaultThumbnail
   }
 
   return { ...defaultFrontmatter, ...frontmatter }

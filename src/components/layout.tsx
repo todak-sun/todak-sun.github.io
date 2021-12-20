@@ -20,7 +20,9 @@ const LayoutContainer = ({ children }: LayoutProps) => {
   `)
 
   return (
-    <Layout className="layout">
+    <Layout className="layout" style={{
+      background: `#ffffff`
+    }}>
       <Header>
         <GlobalNavbar/>
       </Header>
@@ -29,6 +31,7 @@ const LayoutContainer = ({ children }: LayoutProps) => {
           margin: `0 auto`,
           maxWidth: 960,
           padding: `0 1.0875rem 1.45rem`,
+          background: `#ffffff`,
         }}
       >
         <main>{children}</main>

@@ -1,7 +1,8 @@
 import * as React from 'react'
 import LayoutContainer from '../../components/layout'
+import { getImage } from 'gatsby-plugin-image'
 import { graphql, Link } from 'gatsby'
-import { List } from 'antd'
+import { Avatar, List } from 'antd'
 
 interface BlogIndexPageProps {
   path: string
@@ -20,7 +21,10 @@ const BlogIndexPage = (props: BlogIndexPageProps) => {
     created: edge.node.frontmatter.created,
     updated: edge.node.frontmatter.updated,
     title: edge.node.frontmatter.title,
+    thumbnail: getImage(edge.node.frontmatter.thumbnail) ,
   }))
+
+  console.log(postList)
 
   return (
     <LayoutContainer>
@@ -33,7 +37,7 @@ const BlogIndexPage = (props: BlogIndexPageProps) => {
           onChange: page => {
             console.log(page)
           },
-          pageSize: 2,
+          pageSize: 10,
         }}
         dataSource={postList}
         footer={
@@ -41,7 +45,12 @@ const BlogIndexPage = (props: BlogIndexPageProps) => {
             <p>footer</p>
           </div>
         }
-        renderItem={(item: any) => <List.Item key={item.path}>{item.title}</List.Item>}
+        renderItem={(item: any) => (
+          <List.Item key={item.path}>
+            <List.Item.Meta avatar={<Avatar src={item.thumbnail} />} />
+            {item.title}
+          </List.Item>
+        )}
       />
 
       <ul>
@@ -65,9 +74,10 @@ export const pageQuery = graphql`
             slug
           }
           frontmatter {
+            title
+            thumbnail
             created(formatString: "MMM DD, YYYY")
             updated(formatString: "MMM DD, YYYY")
-            title
           }
         }
       }

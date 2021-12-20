@@ -21,7 +21,8 @@
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-helmet": "^6.1.0",
-    "antd" : "^4.17.3"
+    "antd" : "^4.17.3",
+    "@ant-design/icons" : "^4.7.0"
   },
   "devDependencies": {
     "prettier": "^2.4.1",
