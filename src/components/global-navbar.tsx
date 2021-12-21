@@ -19,7 +19,6 @@ const GlobalNavbar = () => {
     return document.location.pathname
   }
 
-
   return (
     <Menu theme="light" mode="horizontal" defaultSelectedKeys={[getCurrentPage()]}>
       {data

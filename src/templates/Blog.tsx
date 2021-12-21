@@ -15,6 +15,8 @@ const Blog = (props: BlogProps) => {
     <>
       <LayoutContainer>
         <h1>{frontmatter.title}</h1>
+        <h2>{frontmatter.created}</h2>
+        <h2>{frontmatter.updated}</h2>
         <div className="blog-content" dangerouslySetInnerHTML={{ __html: html }} />
       </LayoutContainer>
     </>
@@ -28,6 +30,8 @@ export const pageQuery = graphql`
       excerpt(truncate: true, format: PLAIN)
       frontmatter {
         title
+        created
+        updated
       }
     }
   }
