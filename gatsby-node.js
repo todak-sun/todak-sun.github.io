@@ -5,7 +5,6 @@ const { recreateSlug, fillFrontmatter } = require(`./src/utils/gatsby-support`)
 exports.onCreateNode = ({ node, actions, getNode }) => {
   const { createNodeField } = actions
 
-  console.log(node);
 
   if (node.internal.type === `MarkdownRemark`) {
     const slug = createFilePath({ node, getNode, basePath: `pages` })

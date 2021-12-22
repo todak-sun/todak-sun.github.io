@@ -1,5 +1,4 @@
 const path = require(`path`);
-const defaultThumbnail = require(`../images/NULL.png`)
 
 exports.recreateSlug = slug => {
   let result = ''
@@ -9,7 +8,8 @@ exports.recreateSlug = slug => {
   return result
 }
 
-exports.fillFrontmatter = frontmatter => {
+exports.fillFrontmatter = (frontmatter) => {
+  console.log(frontmatter)
   const defaultFrontmatter = {
     title: '',
     updated: frontmatter.created,
@@ -17,7 +17,7 @@ exports.fillFrontmatter = frontmatter => {
     categories: '',
     group: '',
     display: true,
-    thumbnail : defaultThumbnail
+    thumbnail : 'defaults/NULL.png',
   }
 
   return { ...defaultFrontmatter, ...frontmatter }

@@ -3,6 +3,7 @@ import LayoutContainer from '../../components/layout'
 import { getImage } from 'gatsby-plugin-image'
 import { graphql, Link } from 'gatsby'
 import { Avatar, List } from 'antd'
+import { imageQuery } from '../../utils/gatsby-graphql-supporter';
 
 interface BlogIndexPageProps {
   path: string
@@ -21,7 +22,7 @@ const BlogIndexPage = (props: BlogIndexPageProps) => {
     created: edge.node.frontmatter.created,
     updated: edge.node.frontmatter.updated,
     title: edge.node.frontmatter.title,
-    thumbnail: getImage(edge.node.frontmatter.thumbnail) ,
+    thumbnail: imageQuery(edge.node.frontmatter.thumbnail).src,
   }))
 
   console.log(postList)
