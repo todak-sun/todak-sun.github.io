@@ -1,36 +1,49 @@
-import * as React from 'react'
-import LayoutContainer from '../../components/layout'
-import { getImage } from 'gatsby-plugin-image'
+import { Image, List } from 'antd'
 import { graphql, Link } from 'gatsby'
-import { Avatar, List } from 'antd'
-import { imageQuery } from '../../utils/gatsby-graphql-supporter';
+import React, { useState } from 'react'
+import LayoutContainer from '../../components/layout'
+import { imageQuery } from '../../utils/gatsby-graphql-supporter'
 
-interface BlogIndexPageProps {
+interface IBlogIndexPageProps {
   path: string
   data: any
 }
 
-interface Edge {
-  node: any
+interface IEdge {
+  node: Inode
 }
 
-const BlogIndexPage = (props: BlogIndexPageProps) => {
+interface Inode {
+  excerpt: string
+  fields: { slug: string }
+  frontmatter: any
+}
+
+interface IPost {
+  excerpt: string
+  path: string
+  created: string
+  updated: string
+  title: string
+  thumbnail: string
+}
+
+const BlogIndexPage = (props: IBlogIndexPageProps) => {
   const { data } = props
 
-  const postList = data.allMarkdownRemark.edges.map((edge: Edge) => ({
-    path: edge.node.fields.slug,
-    created: edge.node.frontmatter.created,
-    updated: edge.node.frontmatter.updated,
-    title: edge.node.frontmatter.title,
-    thumbnail: imageQuery(edge.node.frontmatter.thumbnail).src,
-  }))
-
-  console.log(postList)
+  const [postList, setPostList] = useState<IPost[]>(
+    data.allMarkdownRemark.edges.map((edge: IEdge) => ({
+      excerpt: edge.node.excerpt,
+      path: edge.node.fields.slug,
+      created: edge.node.frontmatter.created,
+      updated: edge.node.frontmatter.updated,
+      title: edge.node.frontmatter.title,
+      thumbnail: imageQuery(edge.node.frontmatter.thumbnail).src,
+    }))
+  )
 
   return (
     <LayoutContainer>
-      <p>여기는 블로그 메인이다.</p>
-
       <List
         itemLayout="vertical"
         size="large"
@@ -46,21 +59,28 @@ const BlogIndexPage = (props: BlogIndexPageProps) => {
             <p>footer</p>
           </div>
         }
-        renderItem={(item: any) => (
-          <List.Item key={item.path}>
-            <List.Item.Meta avatar={<Avatar src={item.thumbnail} />} />
-            {item.title}
+        renderItem={(post: IPost) => (
+          <List.Item
+            key={post.path}
+            extra={
+              <Image
+                width={272}
+                alt="thumbnail"
+                src={post.thumbnail}
+                onClick={e => {
+                  console.log(e)
+                }}
+              />
+            }
+          >
+            {/* <List.Item.Meta avatar={<Avatar src={post.thumbnail} />} /> */}
+            <Link to={`/blogs${post.path}`}>{post.title}</Link>
+            <p>{post.excerpt}</p>
+            <p>{post.created}</p>
+            <p>{post.updated}</p>
           </List.Item>
         )}
       />
-
-      <ul>
-        {postList.map((post: any) => (
-          <li key={post.path}>
-            <Link to={`/blogs${post.path}`}>{post.title}</Link>
-          </li>
-        ))}
-      </ul>
     </LayoutContainer>
   )
 }
@@ -77,8 +97,8 @@ export const pageQuery = graphql`
           frontmatter {
             title
             thumbnail
-            created(formatString: "MMM DD, YYYY")
-            updated(formatString: "MMM DD, YYYY")
+            created(formatString: "YYYY년 MM월 DD일")
+            updated(formatString: "YYYY년 MM월 DD일")
           }
         }
       }
