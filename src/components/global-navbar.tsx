@@ -13,6 +13,7 @@ const GlobalNavbar = () => {
   const data: INavbarItem[] = [
     { path: '/', name: 'Home', display: true },
     { path: '/blogs', name: '블로그', display: true },
+    { path: '/portfolio', name: '포트폴리오', display: true },
   ]
 
   const getCurrentPage = () => {

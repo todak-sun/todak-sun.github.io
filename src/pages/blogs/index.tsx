@@ -1,6 +1,6 @@
-import { Image, List } from 'antd'
+import { Image, Input, List } from 'antd'
 import { graphql, Link } from 'gatsby'
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import LayoutContainer from '../../components/layout'
 import { imageQuery } from '../../utils/gatsby-graphql-supporter'
 
@@ -26,24 +26,36 @@ interface IPost {
   updated: string
   title: string
   thumbnail: string
+  tags: string[]
 }
 
 const BlogIndexPage = (props: IBlogIndexPageProps) => {
   const { data } = props
 
-  const [postList, setPostList] = useState<IPost[]>(
-    data.allMarkdownRemark.edges.map((edge: IEdge) => ({
-      excerpt: edge.node.excerpt,
-      path: edge.node.fields.slug,
-      created: edge.node.frontmatter.created,
-      updated: edge.node.frontmatter.updated,
-      title: edge.node.frontmatter.title,
-      thumbnail: imageQuery(edge.node.frontmatter.thumbnail).src,
-    }))
+  const [searchKeyword, setSearchKeyword] = useState<string>('')
+
+  const postList: IPost[] = useCallback(
+    data.allMarkdownRemark.edges
+      .map((edge: IEdge) => ({
+        excerpt: edge.node.excerpt,
+        path: edge.node.fields.slug,
+        created: edge.node.frontmatter.created,
+        tags: edge.node.frontmatter.tags,
+        updated: edge.node.frontmatter.updated,
+        title: edge.node.frontmatter.title,
+        thumbnail: imageQuery(edge.node.frontmatter.thumbnail).src,
+      }))
+      .filter((post: IPost) => post.title.includes(searchKeyword)),
+    [searchKeyword]
   )
+
+  const onSearch = (value: string) => {
+    setSearchKeyword(value)
+  }
 
   return (
     <LayoutContainer>
+      <Input.Search placeholder="검색어를 입력해주세요" onSearch={onSearch} enterButton />
       <List
         itemLayout="vertical"
         size="large"
@@ -73,11 +85,13 @@ const BlogIndexPage = (props: IBlogIndexPageProps) => {
               />
             }
           >
-            {/* <List.Item.Meta avatar={<Avatar src={post.thumbnail} />} /> */}
-            <Link to={`/blogs${post.path}`}>{post.title}</Link>
+            <Link to={`/blogs${post.path}`}>
+              <h2>{post.title}</h2>
+            </Link>
             <p>{post.excerpt}</p>
             <p>{post.created}</p>
             <p>{post.updated}</p>
+            <p>{post.tags.map(tag => `#${tag}`).join(' ')} </p>
           </List.Item>
         )}
       />
@@ -97,6 +111,7 @@ export const pageQuery = graphql`
           frontmatter {
             title
             thumbnail
+            tags
             created(formatString: "YYYY년 MM월 DD일")
             updated(formatString: "YYYY년 MM월 DD일")
           }

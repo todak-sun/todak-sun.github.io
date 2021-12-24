@@ -5,12 +5,10 @@ const { recreateSlug, fillFrontmatter } = require(`./src/utils/gatsby-support`)
 exports.onCreateNode = ({ node, actions, getNode }) => {
   const { createNodeField } = actions
 
-
   if (node.internal.type === `MarkdownRemark`) {
     const slug = createFilePath({ node, getNode, basePath: `pages` })
-    const frontMatter = fillFrontmatter(node.frontmatter);
-    node.frontmatter = frontMatter;
-    
+    const frontMatter = fillFrontmatter(node.frontmatter)
+    node.frontmatter = frontMatter
 
     createNodeField({
       name: `slug`,
@@ -50,9 +48,8 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
   const { edges } = result.data.allMarkdownRemark
 
   edges.forEach(({ node }) => {
-    const { fields, frontmatter } = node
+    const { fields } = node
     const { slug } = fields
-    const { created, updated } = frontmatter
 
     createPage({
       path: `/blogs${slug}`,
