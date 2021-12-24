@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunktodak_github_io=self.webpackChunktodak_github_io||[]).push([[691],{6738:function(e,t,l){l.r(t);var n=l(5444),u=l(7294),a=l(9986),r=l(3751);t.default=function(){return u.createElement(a.Z,null,u.createElement(r.Z,{title:"Home"}),u.createElement("h1",null,"블로그 개설중"),u.createElement("p",null,"올해안에 대충이라도 만들어보고 싶은 페이지!"),u.createElement("p",null,u.createElement(n.Link,{to:"/blogs"},"블로그 글들")," ",u.createElement("br",null)))}}}]);
+//# sourceMappingURL=component---src-pages-index-tsx-2eabf42fef509cb428ab.js.map
