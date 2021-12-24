@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React, { useEffect } from 'react'
 
 import { Menu } from 'antd'
 import { Link } from 'gatsby'
@@ -10,18 +10,16 @@ interface INavbarItem {
 }
 
 const GlobalNavbar = () => {
+  const isClientSide: boolean = typeof window !== 'undefined'
+
   const data: INavbarItem[] = [
     { path: '/', name: 'Home', display: true },
     { path: '/blogs', name: '블로그', display: true },
     { path: '/portfolio', name: '포트폴리오', display: true },
   ]
 
-  const getCurrentPage = () => {
-    return document.location.pathname
-  }
-
   return (
-    <Menu theme="light" mode="horizontal" defaultSelectedKeys={[getCurrentPage()]}>
+    <Menu theme="light" mode="horizontal" defaultSelectedKeys={[isClientSide ? document.location.pathname : '/']}>
       {data
         .filter(item => item.display)
         .map(item => {

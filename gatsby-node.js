@@ -18,6 +18,14 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
   }
 }
 
+exports.onCreateWebpackConfig = (({stage, loaders, actions}) => {
+  console.log('stage', stage)
+  console.log('loaders', loaders)
+  if(stage === 'build-html' || stage === 'develop-html')  {
+    //TODO: Server Side Rendering 시 window 또는 document 찾지 않도록 하는 코드 삽입 예정.
+  }
+})
+
 exports.createPages = async ({ actions, graphql, reporter }) => {
   const { createPage } = actions
   const blogTemplate = require.resolve('./src/templates/Blog.tsx')
