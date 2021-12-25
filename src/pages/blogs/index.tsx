@@ -1,7 +1,7 @@
-import { Image, Input, List } from 'antd'
+import { Image, Input, List, Space, Tag } from 'antd'
 import { graphql, Link } from 'gatsby'
 import React, { useCallback, useState } from 'react'
-import LayoutContainer from '../../components/layout'
+import LayoutContainer from '../../components/layout-container'
 import { imageQuery } from '../../utils/gatsby-graphql-supporter'
 
 interface IBlogIndexPageProps {
@@ -16,7 +16,15 @@ interface IEdge {
 interface Inode {
   excerpt: string
   fields: { slug: string }
-  frontmatter: any
+  frontmatter: IFrontmatter
+}
+
+interface IFrontmatter {
+  created: string
+  tags: string[]
+  updated: string
+  title: string
+  thumbnail: string
 }
 
 interface IPost {
@@ -31,27 +39,19 @@ interface IPost {
 
 const BlogIndexPage = (props: IBlogIndexPageProps) => {
   const { data } = props
-
+  const edges: IEdge[] = data.allMarkdownRemark.edges
+  const allPosts: IPost[] = edges.map(edge => ({
+    excerpt: edge.node.excerpt,
+    path: edge.node.fields.slug,
+    created: edge.node.frontmatter.created,
+    tags: edge.node.frontmatter.tags,
+    updated: edge.node.frontmatter.updated,
+    title: edge.node.frontmatter.title,
+    thumbnail: imageQuery(edge.node.frontmatter.thumbnail).src,
+  }))
   const [searchKeyword, setSearchKeyword] = useState<string>('')
-
-  const postList: IPost[] = useCallback(
-    data.allMarkdownRemark.edges
-      .map((edge: IEdge) => ({
-        excerpt: edge.node.excerpt,
-        path: edge.node.fields.slug,
-        created: edge.node.frontmatter.created,
-        tags: edge.node.frontmatter.tags,
-        updated: edge.node.frontmatter.updated,
-        title: edge.node.frontmatter.title,
-        thumbnail: imageQuery(edge.node.frontmatter.thumbnail).src,
-      }))
-      .filter((post: IPost) => post.title.includes(searchKeyword)),
-    [searchKeyword]
-  )
-
-  const onSearch = (value: string) => {
-    setSearchKeyword(value)
-  }
+  const targetPosts = useCallback((): IPost[] => allPosts.filter(post => post.title.includes(searchKeyword)), [searchKeyword])
+  const onSearch = (value: string) => setSearchKeyword(value)
 
   return (
     <LayoutContainer>
@@ -65,34 +65,30 @@ const BlogIndexPage = (props: IBlogIndexPageProps) => {
           },
           pageSize: 10,
         }}
-        dataSource={postList}
+        dataSource={targetPosts()}
         footer={
           <div>
             <p>footer</p>
           </div>
         }
         renderItem={(post: IPost) => (
-          <List.Item
-            key={post.path}
-            extra={
-              <Image
-                width={272}
-                alt="thumbnail"
-                src={post.thumbnail}
-                onClick={e => {
-                  console.log(e)
-                }}
-              />
-            }
-          >
-            <Link to={`/blogs${post.path}`}>
+          <Link key={post.path} to={`/blogs${post.path}`}>
+            <List.Item extra={<img width={272} alt="thumbnail" src={post.thumbnail} />}>
+              {/* <Link to={`/blogs${post.path}`}> */}
               <h2>{post.title}</h2>
-            </Link>
-            <p>{post.excerpt}</p>
-            <p>{post.created}</p>
-            <p>{post.updated}</p>
-            <p>{post.tags.map(tag => `#${tag}`).join(' ')} </p>
-          </List.Item>
+              {/* </Link> */}
+              <p>{post.excerpt}</p>
+              <p>created: {post.created}</p>
+              <p>updated: {post.updated}</p>
+              <p>
+                {post.tags
+                  .map(tag => `# ${tag}`)
+                  .map(tag => (
+                    <Tag key={tag}>{tag}</Tag>
+                  ))}{' '}
+              </p>
+            </List.Item>
+          </Link>
         )}
       />
     </LayoutContainer>

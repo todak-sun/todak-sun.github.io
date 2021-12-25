@@ -1,3 +1,8 @@
+const dotenv = require(`dotenv`)
+dotenv.config()
+
+const { githubApiQuery } = require(`./github-api`)
+
 module.exports = {
   siteMetadata: {
     title: `Todak's Log`,
@@ -6,6 +11,7 @@ module.exports = {
     siteUrl: `https://todak-sun.github.io/`,
   },
   plugins: [
+    `gatsby-plugin-sass`,
     `gatsby-plugin-typescript`,
     `gatsby-plugin-react-helmet`,
     `gatsby-plugin-image`,
@@ -40,9 +46,19 @@ module.exports = {
         name: `gatsby-starter-default`,
         short_name: `starter`,
         start_url: `/`,
-        background_color: `#663399`,
+        background_color: '#ffffff',
         display: `minimal-ui`,
         icon: `src/images/gatsby-icon.png`,
+      },
+    },
+    {
+      resolve: `gatsby-source-github-api`,
+      options: {
+        token: process.env.GITHUB_PERSOANL_ACCESS_TOKEN,
+        graphQLQuery: githubApiQuery,
+        variables: {
+          github_login: process.env.GITHUB_LOGIN
+        }
       },
     },
   ],

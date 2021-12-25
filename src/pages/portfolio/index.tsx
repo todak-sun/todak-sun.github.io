@@ -1,5 +1,5 @@
 import React from 'react'
-import LayoutContainer from '../../components/layout'
+import LayoutContainer from '../../components/layout-container'
 
 const PortFolioIndex = () => {
   return (

@@ -1,0 +1,16 @@
+.global-navbar {
+  width: 100%;
+  box-sizing: border-box;
+  background-color: #ffffff;
+  flex-direction: row;
+
+  .logo {
+    background-color: #eda4ff;
+    padding: 0.25rem;
+  }
+
+  .menus {
+      margin-left: 1rem;
+  }
+
+}
