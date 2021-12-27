@@ -15,7 +15,6 @@ exports.fillFrontmatter = (frontmatter) => {
     updated: frontmatter.created,
     tags: [],
     categories: '',
-    group: '',
     display: true,
     thumbnail : 'defaults/NULL.png',
   }
