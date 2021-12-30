@@ -1,6 +1,7 @@
 ---
 title: gatsbyjs로 블로그 만들기
 created: 2021-12-27
+updated: 2021-12-30
 tags:
   - gatsby
   - gatsbyjs

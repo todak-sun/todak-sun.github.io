@@ -43,9 +43,10 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `gatsby-starter-default`,
-        short_name: `starter`,
+        name: `Todak's log`,
+        short_name: `t-log`,
         start_url: `/`,
+        lang:'kr',
         background_color: '#ffffff',
         display: `minimal-ui`,
         icon: `src/images/gatsby-icon.png`,

@@ -1,5 +1,5 @@
-import { Image, Input, List, Space, Tag } from 'antd'
-import { graphql, Link } from 'gatsby'
+import { Col, Divider, Input, List, Row, Tag } from 'antd'
+import { graphql } from 'gatsby'
 import React, { useCallback, useState } from 'react'
 import LayoutContainer from '../../components/layout-container'
 import { imageQuery } from '../../utils/gatsby-graphql-supporter'
@@ -55,10 +55,14 @@ const BlogIndexPage = (props: IBlogIndexPageProps) => {
 
   return (
     <LayoutContainer>
-      <Input.Search placeholder="검색어를 입력해주세요" onSearch={onSearch} enterButton />
+      <Row>
+        <Col flex="auto"></Col>
+        <Col flex="300px">
+          <Input.Search placeholder="검색어를 입력해주세요" onSearch={onSearch} enterButton />
+        </Col>
+      </Row>
       <List
         itemLayout="vertical"
-        size="large"
         pagination={{
           onChange: page => {
             console.log(page)
@@ -66,29 +70,27 @@ const BlogIndexPage = (props: IBlogIndexPageProps) => {
           pageSize: 10,
         }}
         dataSource={targetPosts()}
-        footer={
-          <div>
-            <p>footer</p>
-          </div>
-        }
         renderItem={(post: IPost) => (
-          <Link key={post.path} to={`/blogs${post.path}`}>
-            <List.Item extra={<img width={272} alt="thumbnail" src={post.thumbnail} />}>
-              {/* <Link to={`/blogs${post.path}`}> */}
-              <h2>{post.title}</h2>
-              {/* </Link> */}
-              <p>{post.excerpt}</p>
-              <p>created: {post.created}</p>
-              <p>updated: {post.updated}</p>
-              <p>
-                {post.tags
-                  .map(tag => `# ${tag}`)
-                  .map(tag => (
-                    <Tag key={tag}>{tag}</Tag>
-                  ))}{' '}
-              </p>
-            </List.Item>
-          </Link>
+          <List.Item
+            key={post.path}
+            extra={
+              <div style={{ position: 'relative', width: '250px', height: '100%' }}>
+                <img alt="thumbnail" src={post.thumbnail} style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }} />
+              </div>
+            }
+          >
+            <List.Item.Meta title={post.title} description={<p>{post.updated === post.created ? post.created : `${post.created} (Updated: ${post.updated})`}</p>} />
+
+            {post.excerpt}
+            <Divider />
+            <p>
+              {post.tags
+                .map(tag => `# ${tag}`)
+                .map(tag => (
+                  <Tag key={tag}>{tag}</Tag>
+                ))}
+            </p>
+          </List.Item>
         )}
       />
     </LayoutContainer>
@@ -108,8 +110,8 @@ export const pageQuery = graphql`
             title
             thumbnail
             tags
-            created(formatString: "YYYY년 MM월 DD일")
-            updated(formatString: "YYYY년 MM월 DD일")
+            created(formatString: "YYYY.MM.DD")
+            updated(formatString: "YYYY.MM.DD")
           }
         }
       }
