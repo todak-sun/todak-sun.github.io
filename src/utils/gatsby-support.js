@@ -1,11 +1,11 @@
 const path = require(`path`);
 
-exports.recreateSlug = slug => {
+exports.recreateSlug = (slug) => {
   let result = ''
   if (slug.endsWith('/')) {
     result = slug.slice(0, slug.length - 1)
   }
-  return result
+  return result;
 }
 
 exports.fillFrontmatter = (frontmatter) => {

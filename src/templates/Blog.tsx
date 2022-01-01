@@ -15,14 +15,16 @@ const Blog = (props: BlogProps) => {
   const { frontmatter, html } = markdownRemark
   return (
     <LayoutContainer>
-      <PageHeader title={frontmatter.title} style={{ backgroundImage: `${imageQuery(frontmatter.thumbnail).src}` }}>
+      <PageHeader title={frontmatter.title}>
         <Descriptions>
           <Descriptions.Item label="created">{frontmatter.created}</Descriptions.Item>
           <Descriptions.Item label="updated">{frontmatter.updated}</Descriptions.Item>
         </Descriptions>
       </PageHeader>
       <img src={imageQuery(frontmatter.thumbnail).src} />
-      <div className="blog-content" dangerouslySetInnerHTML={{ __html: html }} />
+      <div className="blog-content-container" style={{maxWidth: '1000px'}}>
+        <div className="blog-content" dangerouslySetInnerHTML={{ __html: html }} />
+      </div>
     </LayoutContainer>
   )
 }
@@ -31,12 +33,12 @@ export const pageQuery = graphql`
   query ($slug: String) {
     markdownRemark(fields: { slug: { eq: $slug } }) {
       html
-      excerpt(truncate: true, format: PLAIN)
       frontmatter {
         title
-        created
-        updated
+        created(formatString: "YYYY.MM.DD")
+        updated(formatString: "YYYY.MM.DD")
         thumbnail
+        tags
       }
     }
   }

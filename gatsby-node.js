@@ -18,13 +18,11 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
   }
 }
 
-exports.onCreateWebpackConfig = (({stage, loaders, actions}) => {
-  console.log('stage', stage)
-  console.log('loaders', loaders)
-  if(stage === 'build-html' || stage === 'develop-html')  {
+exports.onCreateWebpackConfig = ({ stage, loaders, actions }) => {
+  if (stage === 'build-html' || stage === 'develop-html') {
     //TODO: Server Side Rendering 시 window 또는 document 찾지 않도록 하는 코드 삽입 예정.
   }
-})
+}
 
 exports.createPages = async ({ actions, graphql, reporter }) => {
   const { createPage } = actions
@@ -37,6 +35,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
             fields {
               slug
             }
+            fileAbsolutePath
             frontmatter {
               title
               updated(formatString: "YYYY-MM-DD")
@@ -56,14 +55,16 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
   const { edges } = result.data.allMarkdownRemark
 
   edges.forEach(({ node }) => {
-    const { fields } = node
+    const { fields, fileAbsolutePath } = node
     const { slug } = fields
 
-    createPage({
-      path: `/blogs${slug}`,
-      component: blogTemplate,
-      context: { slug },
-      defer: true,
-    })
+    if (fileAbsolutePath.includes('_blogs')) {
+      createPage({
+        path: `/blogs${slug}`,
+        component: blogTemplate,
+        context: { slug },
+        defer: true,
+      })
+    }
   })
 }

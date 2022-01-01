@@ -1,5 +1,5 @@
 import { Col, Divider, Input, List, Row, Tag } from 'antd'
-import { graphql } from 'gatsby'
+import { graphql, Link } from 'gatsby'
 import React, { useCallback, useState } from 'react'
 import LayoutContainer from '../../components/layout-container'
 import { imageQuery } from '../../utils/gatsby-graphql-supporter'
@@ -79,8 +79,7 @@ const BlogIndexPage = (props: IBlogIndexPageProps) => {
               </div>
             }
           >
-            <List.Item.Meta title={post.title} description={<p>{post.updated === post.created ? post.created : `${post.created} (Updated: ${post.updated})`}</p>} />
-
+            <List.Item.Meta title={<Link to={`/blogs${post.path}`}>{post.title}</Link>} description={<p>{post.updated === post.created ? post.created : `${post.created} (Updated: ${post.updated})`}</p>} />
             {post.excerpt}
             <Divider />
             <p>
