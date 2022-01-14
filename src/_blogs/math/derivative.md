@@ -1,7 +1,7 @@
 ---
 title: 미분정리
 created: 2022-01-13
-display: false
+display: true
 tags:
   - 수학
 ---
@@ -18,4 +18,6 @@ tags:
 - 출처 위키백과
 
 
+$2 \times 2 = 4$
 
+$4 \div 2 = 2$

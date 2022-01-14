@@ -55,43 +55,48 @@ const BlogIndexPage = (props: IBlogIndexPageProps) => {
 
   return (
     <LayoutContainer>
-      <Row>
-        <Col flex="auto"></Col>
-        <Col flex="300px">
-          <Input.Search placeholder="검색어를 입력해주세요" onSearch={onSearch} enterButton />
-        </Col>
-      </Row>
-      <List
-        itemLayout="vertical"
-        pagination={{
-          onChange: page => {
-            console.log(page)
-          },
-          pageSize: 10,
-        }}
-        dataSource={targetPosts()}
-        renderItem={(post: IPost) => (
-          <List.Item
-            key={post.path}
-            extra={
-              <div style={{ position: 'relative', width: '250px', height: '100%' }}>
-                <img alt="thumbnail" src={post.thumbnail} style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }} />
-              </div>
-            }
-          >
-            <List.Item.Meta title={<Link to={`/blogs${post.path}`}>{post.title}</Link>} description={<p>{post.updated === post.created ? post.created : `${post.created} (Updated: ${post.updated})`}</p>} />
-            {post.excerpt}
-            <Divider />
-            <p>
-              {post.tags
-                .map(tag => `# ${tag}`)
-                .map(tag => (
-                  <Tag key={tag}>{tag}</Tag>
-                ))}
-            </p>
-          </List.Item>
-        )}
-      />
+      <>
+        <Row>
+          <Col flex="auto"></Col>
+          <Col flex="300px">
+            <Input.Search placeholder="검색어를 입력해주세요" onSearch={onSearch} enterButton />
+          </Col>
+        </Row>
+        <List
+          itemLayout="vertical"
+          pagination={{
+            onChange: page => {
+              console.log(page)
+            },
+            pageSize: 10,
+          }}
+          dataSource={targetPosts()}
+          renderItem={(post: IPost) => (
+            <List.Item
+              key={post.path}
+              extra={
+                <div style={{ position: 'relative', width: '250px', height: '100%' }}>
+                  <img alt="thumbnail" src={post.thumbnail} style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }} />
+                </div>
+              }
+            >
+              <List.Item.Meta
+                title={<Link to={`/blogs${post.path}`}>{post.title}</Link>}
+                description={<p>{post.updated === post.created ? post.created : `${post.created} (Updated: ${post.updated})`}</p>}
+              />
+              {post.excerpt}
+              <Divider />
+              <p>
+                {post.tags
+                  .map(tag => `# ${tag}`)
+                  .map(tag => (
+                    <Tag key={tag}>{tag}</Tag>
+                  ))}
+              </p>
+            </List.Item>
+          )}
+        />
+      </>
     </LayoutContainer>
   )
 }

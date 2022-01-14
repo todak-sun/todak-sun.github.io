@@ -32,10 +32,15 @@ module.exports = {
     {
       resolve: `gatsby-transformer-remark`,
       options: {
-        tableOfContents: {
-          heading: null,
-          maxDepth: 6,
-        },
+        plugins: [
+          `gatsby-remark-prismjs`,
+          {
+            resolve: `gatsby-remark-katex`,
+            options: {
+              strict: `ignore`,
+            },
+          },
+        ],
       },
     },
     `gatsby-transformer-sharp`,
@@ -46,7 +51,7 @@ module.exports = {
         name: `Todak's log`,
         short_name: `t-log`,
         start_url: `/`,
-        lang:'kr',
+        lang: 'kr',
         background_color: '#ffffff',
         display: `minimal-ui`,
         icon: `src/images/gatsby-icon.png`,
@@ -58,8 +63,8 @@ module.exports = {
         token: process.env.GITHUB_PERSOANL_ACCESS_TOKEN,
         graphQLQuery: githubApiQuery,
         variables: {
-          github_login: process.env.GITHUB_LOGIN
-        }
+          github_login: process.env.GITHUB_LOGIN,
+        },
       },
     },
   ],
