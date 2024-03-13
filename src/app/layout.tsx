@@ -22,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body className={inter.className}>
-        <DefaultLayout>Hello</DefaultLayout>
+        <DefaultLayout>{children}</DefaultLayout>
       </body>
     </html>
   );

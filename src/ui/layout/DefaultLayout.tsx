@@ -15,7 +15,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import NavItems from "./NavItems";
+import AppBarNavItems from "./AppBarNavItems";
 
 interface Props {
   /**
@@ -78,7 +78,7 @@ export default function DrawerAppBar({ window, children }: Props) {
           >
             MUI
           </Typography>
-          <NavItems />
+          <AppBarNavItems />
         </Toolbar>
       </AppBar>
       <nav>

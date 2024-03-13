@@ -2,7 +2,7 @@ import { Box, Button } from "@mui/material";
 
 const navItems = ["Home", "About", "Contact"];
 
-const NavItems = () => (
+const AppBarNavItems = () => (
   <Box sx={{ display: { xs: "none", sm: "block" } }}>
     {navItems.map((item) => (
       <Button key={item} sx={{ color: "#fff" }}>
@@ -12,4 +12,4 @@ const NavItems = () => (
   </Box>
 );
 
-export default NavItems;
+export default AppBarNavItems;
