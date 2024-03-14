@@ -1,3 +1,4 @@
+import { GlobalLayout } from "@/ui/layout";
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
@@ -5,7 +6,6 @@ import "@fontsource/roboto/700.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import DefaultLayout from "@/ui/layout/DefaultLayout";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body className={inter.className}>
-        <DefaultLayout>{children}</DefaultLayout>
+        <GlobalLayout>{children}</GlobalLayout>
       </body>
     </html>
   );
