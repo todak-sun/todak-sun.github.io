@@ -2,6 +2,7 @@ import * as fs from "fs/promises";
 import { compileMDX } from "next-mdx-remote/rsc";
 import * as path from "path";
 import matter from "gray-matter";
+import { ZoneId, convert, nativeJs } from "@js-joda/core";
 
 const POSTS_FOLDER = path.join(process.cwd(), "content", "logs");
 
@@ -34,7 +35,17 @@ export const createMatters = async <T>(): Promise<(T & { summary: string; path: 
     paths.map(async (path) => {
       const source = await readLogsMarkdownFile(path);
       const { content, data } = matter(source!);
-      const mat = data as T;
+      const mat = Object.entries(data).reduce(
+        (acc, [key, value]) => {
+          if (value instanceof Date) {
+            acc[key] = nativeJs(value, ZoneId.UTC).toLocalDateTime();
+          } else {
+            acc[key] = value;
+          }
+          return acc;
+        },
+        {} as { [key: string]: any },
+      ) as T;
       return {
         ...mat,
         summary: content.slice(0, Math.min(content.length - 1, 1000)),

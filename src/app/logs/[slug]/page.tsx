@@ -1,5 +1,5 @@
+import { createMDX, readLogsMarkdownFile, readLogsPaths } from "@/utils";
 import { notFound } from "next/navigation";
-import { createMDX, readLogsMarkdownFile, readLogsPaths } from "../../utils";
 
 export async function generateStaticParams() {
   const paths = await readLogsPaths();
